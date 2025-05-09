@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+     "jsx": "react-jsx",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "rootDir": ".",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": false,
+    "paths": {
+      "@shared/*": ["shared/*"]
+    }
+  },
+  "include": [
+   "index.ts", "server/**/*", "client/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "client",
+    "dist"
+  ]
+}
