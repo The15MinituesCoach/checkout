@@ -2,7 +2,7 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import { storage } from "./storage";
-import { sendPurchaseConfirmation, sendCustomerReceipt } from "./utils/email";
+import { sendCustomerReceipt, sendPurchaseConfirmation } from "./utils/email.js";
 import { generateDownloadUrl, verifyDownloadToken } from "./utils/download";
 import fs from "fs";
 import path from "path";
