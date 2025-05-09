@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import Stripe from "stripe";
 import { storage } from "./storage";
 import { sendCustomerReceipt, sendPurchaseConfirmation } from "./utils/email.js";
-import { generateDownloadUrl, verifyDownloadToken } from "./utils/download";
+import { generateDownloadUrl, verifyDownloadToken } from "./utils/download.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
