@@ -1,7 +1,6 @@
 import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useEffect, useState } from 'react';
-import { apiRequest } from "../lib/queryClient";
 import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { ArrowLeft, Check, Shield } from "lucide-react";
@@ -19,7 +18,7 @@ import { Label } from "../components/ui/label";
 // 👇 INSERT THIS RIGHT BELOW THE IMPORTS
 const API_BASE_URL = "https://checkout-j6bj.onrender.com";
 
-export async function apiRequest(method: string, path: string, data?: any) {
+export async function callApi(method: string, path: string, data?: any) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers: { 'Content-Type': 'application/json' },
@@ -67,7 +66,7 @@ const CheckoutForm = ({ paymentIntentId }: CheckoutFormProps) => {
 
     // Update the payment intent with customer information
     try {
-      await apiRequest("POST", "/api/create-payment-intent", {
+      await callApi("POST", "/api/create-payment-intent", {
         customerName: name,
         customerEmail: email,
         productId: "narcissism-survival-guide"
@@ -193,22 +192,25 @@ export default function Checkout() {
     );
   }
   
-  useEffect(() => {
-    apiRequest("POST", "/api/create-payment-intent", {
-      productId: "narcissism-survival-guide",
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        console.log("✅ PaymentIntent response:", data);
-        setClientSecret(data.clientSecret);
-        setPaymentIntentId(data.paymentIntentId);
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("❌ Error creating payment intent:", err);
-        setIsLoading(false);
+useEffect(() => {
+  const fetchPaymentIntent = async () => {
+    try {
+      const res = await callApi("POST", "/api/create-payment-intent", {
+        productId: "narcissism-survival-guide",
       });
-  }, []);
+      const data = await res.json();
+      console.log("✅ PaymentIntent response:", data);
+      setClientSecret(data.clientSecret);
+      setPaymentIntentId(data.paymentIntentId);
+    } catch (err) {
+      console.error("❌ Error creating payment intent:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchPaymentIntent(); // 👈 Call the async function
+}, []);
   // 🔴 Move the error check here
   if (!stripePromise) {
     return (
