@@ -7,7 +7,7 @@ async function throwIfResNotOk(res: Response) {
   }
 }
 
-const BASE_URL = "https://checkout-j6bj.onrender.com"; // Your deployed backend
+const BASE_URL = "https://checkout-api-pcz0.onrender.com"; // Your deployed backend
 
 export async function apiRequest(
   method: string,
