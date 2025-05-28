@@ -13,14 +13,22 @@ export async function apiRequest(
   url: string,
   data?: unknown,
 ): Promise<Response> {
-  const res = await fetch(`${API_BASE}${url}`, {
+  const finalUrl = url.startsWith("http")
+    ? url
+    : `${import.meta.env.VITE_API_BASE}${url}`;
+
+  const res = await fetch(finalUrl, {
     method,
     headers: data ? { "Content-Type": "application/json" } : {},
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
 
-  await throwIfResNotOk(res); // throws if !res.ok
+  if (!res.ok) {
+    const text = (await res.text()) || res.statusText;
+    throw new Error(`${res.status}: ${text}`);
+  }
+
   return res;
 }
 
