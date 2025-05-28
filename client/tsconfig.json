@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    // Enable incremental builds and caching
+    "incremental": true,
+    "tsBuildInfoFile": "../../node_modules/typescript/tsbuildinfo",
+
+    // Compiler settings
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    // Paths for Vite + TypeScript to understand "@"
+    "baseUrl": ".", // ✅ Set relative to client/
+    "paths": {
+          "@/*": ["src/*"],
+      "@shared/*": ["../../shared/*"] // ✅ Adjusted for relative shared path
+    },
+
+    // Typings
+    "types": ["vite/client", "node"],
+    "lib": ["esnext", "dom", "dom.iterable"]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "**/*.test.ts"
+  ]
+}
